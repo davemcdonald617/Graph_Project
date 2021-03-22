@@ -3,12 +3,40 @@
  */
 package Graph_Project;
 
+import com.google.common.graph.MutableNetwork;
+import com.google.common.graph.NetworkBuilder;
+
+
 public class App {
-    public String getGreeting() {
-        return "Hello World!";
-    }
 
     public static void main(String[] args) {
-        System.out.println(new App().getGreeting());
+
+        //Have to have info for graph
+        Person person1 = new Person("Dave McDonald", 33);
+        Person person2 = new Person("Christine Howe", 29);
+        Person person3 = new Person("Michael Scott", 45);
+        Person person4 = new Person("Dwight Schrute", 40);
+        Married married1 = new Married();
+        BinaryRelation relation1 = new BinaryRelation(person1,
+                person2, null );
+        //Get input from file if time.
+
+        MutableNetwork<Person, BinaryRelation> socialNetwork = NetworkBuilder
+                .undirected()
+                .build();
+        socialNetwork.addNode(person1);
+        socialNetwork.addNode(person2);
+        socialNetwork.addNode(person3);
+        socialNetwork.addNode(person4);
+        socialNetwork.addEdge(person1, person2, relation1);
+
+        Visitor formatVisitor = new FormattingVisitorImpl();
+        relation1.accept(formatVisitor);
     }
+
+
+
+
+
+
 }
